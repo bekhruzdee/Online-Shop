@@ -38,8 +38,28 @@ export class UsersService {
 
     return {
       success: true,
-      message: 'Admin created successfully',
+      message: 'Admin created successfully✅',
       data: savedAdmin,
+    };
+  }
+
+  async getAllAdmins(): Promise<{ success: boolean; message: string; data: User[] }> {
+    const admins = await this.usersRepository.find({
+      where: { role: 'admin' }, // Faqat adminlarni olish
+    });
+  
+    if (!admins.length) {
+      return {
+        success: false,
+        message: 'No admins found',
+        data: [],
+      };
+    }
+  
+    return {
+      success: true,
+      message: 'Admins retrieved successfully✅',
+      data: admins,
     };
   }
 

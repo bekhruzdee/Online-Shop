@@ -49,9 +49,9 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard, RolesGuard)
-  @SetMetadata('roles', ['student'])
-  @Get('student-data')
-  getStudentData(@Req() req) {
+  @SetMetadata('roles', ['client'])
+  @Get('client-data')
+  getClientData(@Req() req) {
     return this.authService.getAllMyData(req['payload']);
   }
 }

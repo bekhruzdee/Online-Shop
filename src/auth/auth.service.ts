@@ -6,7 +6,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -70,7 +69,7 @@ export class AuthService {
   }
 
   logout(): { message: string } {
-    return { message: 'Logout successful' };
+    return { message: 'Logout successfully✅' };
   }
 
   async getAllMyData(payload: any) {
