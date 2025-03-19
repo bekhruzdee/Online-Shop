@@ -13,7 +13,6 @@ import { Cart } from './cart/entities/cart.entity';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { OrderItem } from './order/entities/order-item.entity';
-
 @Module({
   imports: [
     ConfigModule.forRoot(),

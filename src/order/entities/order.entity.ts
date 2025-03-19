@@ -1,5 +1,13 @@
 import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+  JoinColumn,
+} from 'typeorm';
 import { OrderItem } from './order-item.entity';
 
 @Entity()
@@ -17,7 +25,7 @@ export class Order {
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
   orderItems: OrderItem[];
 
-  @Column({ default: 'pending' }) // pending, shipped, delivered
+  @Column({ default: 'pending' }) // pending, shipped, delivered, paid
   status: string;
 
   @CreateDateColumn()
