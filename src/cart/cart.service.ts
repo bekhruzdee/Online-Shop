@@ -46,7 +46,7 @@ export class CartService {
         cartItems: cart,
       },
     };
-  }
+  } 
 
   async removeFromCart(user: User, cartItemId: number) {
     const cartItem = await this.cartRepository.findOne({ where: { id: cartItemId, user } });

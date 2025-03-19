@@ -10,6 +10,9 @@ import { ProductsModule } from './products/products.module';
 import { Product } from './products/entities/product.entity';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/entities/cart.entity';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/entities/order.entity';
+import { OrderItem } from './order/entities/order-item.entity';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { Cart } from './cart/entities/cart.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Product, Cart],
+      entities: [User, Product, Cart, Order, OrderItem],
       synchronize: true,
       // logging: true,
     }),
@@ -29,6 +32,7 @@ import { Cart } from './cart/entities/cart.entity';
     UserModule,
     ProductsModule,
     CartModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
