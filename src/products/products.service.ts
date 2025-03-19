@@ -65,9 +65,17 @@ export class ProductsService {
     };
   }
 
-  async updateProduct(id: number, updateProductDto: UpdateProductDto) {
+  async updateProduct(
+    id: number,
+    updateProductDto: UpdateProductDto,
+    file?: Express.Multer.File, // 🔹 Rasm fayli
+  ) {
     const product = await this.getProductById(id);
-    await this.productRepository.update(id, updateProductDto);
+
+    const imagePath = file ? file.filename : product.data.image; // 🔹 Yangi rasm bo‘lsa, yangilaydi
+
+    await this.productRepository.update(id, { ...updateProductDto, image: imagePath });
+
     const updatedProduct = await this.getProductById(id);
     return {
       success: true,
