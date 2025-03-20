@@ -5,8 +5,14 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Payment, PaymentStatus } from './entities/payment.entity';
+import { Payment } from './entities/payment.entity';
 import { Order } from 'src/order/entities/order.entity';
+
+export enum PaymentStatus {
+  PENDING = 'pending',
+  SUCCESSFUL = 'successful',
+  FAILED = 'failed',
+}
 
 @Injectable()
 export class PaymentService {
@@ -32,7 +38,6 @@ export class PaymentService {
 
     const payment = this.paymentRepository.create({
       order,
-      orderId,
       amount,
       status: PaymentStatus.PENDING,
     });
@@ -57,7 +62,7 @@ export class PaymentService {
 
   async getPaymentsByOrderId(orderId: number) {
     const payments = await this.paymentRepository.find({
-      where: { orderId },
+      where: { order: { id: orderId } },
       relations: ['order'],
     });
 
@@ -71,6 +76,7 @@ export class PaymentService {
   async updatePaymentStatus(paymentId: number, status: PaymentStatus) {
     const payment = await this.paymentRepository.findOne({
       where: { id: paymentId },
+      relations: ['order'],
     });
 
     if (!payment) {

@@ -1,8 +1,10 @@
-import { Controller, Post, Get, Patch, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Param, Body, UseGuards } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { PaymentStatus } from './entities/payment.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('payments')
+@UseGuards(AuthGuard)
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
