@@ -13,6 +13,8 @@ import { Cart } from './cart/entities/cart.entity';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { OrderItem } from './order/entities/order-item.entity';
+import { PaymentModule } from './payment/payment.module';
+import { Payment } from './payment/entities/payment.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -23,7 +25,7 @@ import { OrderItem } from './order/entities/order-item.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Product, Cart, Order, OrderItem],
+      entities: [User, Product, Cart, Order, OrderItem, Payment],
       synchronize: true,
       // logging: true,
     }),
@@ -32,6 +34,7 @@ import { OrderItem } from './order/entities/order-item.entity';
     ProductsModule,
     CartModule,
     OrderModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

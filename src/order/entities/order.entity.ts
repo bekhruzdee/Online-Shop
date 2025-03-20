@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { OrderItem } from './order-item.entity';
+import { Payment } from 'src/payment/entities/payment.entity';
 
 @Entity()
 export class Order {
@@ -16,16 +17,20 @@ export class Order {
   id: number;
 
   @ManyToOne(() => User, (user) => user.orders)
-  @JoinColumn({ name: 'userId' }) // 🔹 userId maydonini yaratish uchun
+  @JoinColumn({ name: 'userId' }) 
   user: User;
 
   @Column()
-  userId: number; // 🔹 endi bevosita userId ni ishlatish mumkin
+  userId: number; 
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
   orderItems: OrderItem[];
 
-  @Column({ default: 'pending' }) // pending, shipped, delivered, paid
+  @OneToMany(() => Payment, (payment) => payment.order, { cascade: true }) 
+  payment: Payment;
+  
+
+  @Column({ default: 'pending' }) 
   status: string;
 
   @CreateDateColumn()

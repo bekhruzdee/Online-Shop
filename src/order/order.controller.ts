@@ -28,19 +28,19 @@ export class OrderController {
   }
 
   @Get('all')
-  @UseGuards(AuthGuard, RolesGuard) // ❗ Faqat admin ko‘ra oladi
+  @UseGuards(AuthGuard, RolesGuard) 
   getAllOrders() {
     return this.orderService.getAllOrders();
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard, RolesGuard) // ❗ Faqat admin status o‘zgartira oladi
+  @UseGuards(AuthGuard, RolesGuard) 
   updateOrderStatus(@Param('id') id: number, @Body('status') status: string) {
     return this.orderService.updateOrderStatus(id, status);
   }
 
   @Patch('cancel/:id')
-  @UseGuards(AuthGuard) // ❗ Auth bo‘lishi kerak
+  @UseGuards(AuthGuard) 
   cancelOrder(@Param('id') id: number, @Request() req) {
     return this.orderService.cancelOrder(id, req.user);
   }
