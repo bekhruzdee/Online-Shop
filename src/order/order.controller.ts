@@ -28,21 +28,20 @@ export class OrderController {
   }
 
   @Get('all')
-  @UseGuards(AuthGuard, RolesGuard) 
+  @UseGuards(AuthGuard, RolesGuard)
   getAllOrders() {
     return this.orderService.getAllOrders();
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard, RolesGuard) 
+  @UseGuards(AuthGuard, RolesGuard)
   updateOrderStatus(@Param('id') id: number, @Body('status') status: string) {
     return this.orderService.updateOrderStatus(id, status);
   }
 
   @Patch('cancel/:id')
-  @UseGuards(AuthGuard) 
+  @UseGuards(AuthGuard)
   cancelOrder(@Param('id') id: number, @Request() req) {
     return this.orderService.cancelOrder(id, req.user);
   }
 }
- 

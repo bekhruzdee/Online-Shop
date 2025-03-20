@@ -15,14 +15,20 @@ import { User } from 'src/users/entities/user.entity';
 export class OrderService {
   constructor(
     @InjectRepository(Order) private orderRepository: Repository<Order>,
-    @InjectRepository(OrderItem) private orderItemRepository: Repository<OrderItem>,
+    @InjectRepository(OrderItem)
+    private orderItemRepository: Repository<OrderItem>,
     private readonly cartService: CartService,
   ) {}
 
   async createOrder(user: User) {
     const cart = await this.cartService.getCart(user);
 
-    if (!cart || !cart.data || !cart.data.cartItems || cart.data.cartItems.length === 0) {
+    if (
+      !cart ||
+      !cart.data ||
+      !cart.data.cartItems ||
+      cart.data.cartItems.length === 0
+    ) {
       throw new BadRequestException('Cart is empty!');
     }
 
@@ -77,7 +83,11 @@ export class OrderService {
     order.status = status;
     await this.orderRepository.save(order);
 
-    return { success: true, message: `Order status updated to ${status}`, data: order };
+    return {
+      success: true,
+      message: `Order status updated to ${status}`,
+      data: order,
+    };
   }
 
   async cancelOrder(id: number, user: User) {
@@ -101,6 +111,10 @@ export class OrderService {
     order.status = 'cancelled';
     await this.orderRepository.save(order);
 
-    return { success: true, message: 'Order cancelled successfully', data: order };
+    return {
+      success: true,
+      message: 'Order cancelled successfully',
+      data: order,
+    };
   }
 }

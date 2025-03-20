@@ -8,17 +8,19 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product]),
-  MulterModule.register({
-    storage: diskStorage({
-      destination: './uploads', // Rasmlar shu yerga saqlanadi
-      filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + extname(file.originalname)); // Foydalanuvchining rasm nomini generatsiya qilish
-      },
+  imports: [
+    TypeOrmModule.forFeature([Product]),
+    MulterModule.register({
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
     }),
-  }),
-],
+  ],
   controllers: [ProductsController],
   providers: [ProductsService],
 })

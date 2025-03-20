@@ -17,14 +17,14 @@ export class ProductsService {
     file?: Express.Multer.File,
   ) {
     const imagePath = file ? file.filename : null;
-  
+
     const newProduct = this.productRepository.create({
       ...createProductDto,
       image: imagePath,
     });
-  
+
     const savedProduct = await this.productRepository.save(newProduct);
-  
+
     return {
       success: true,
       message: 'Product created successfully ✅',
@@ -53,10 +53,11 @@ export class ProductsService {
 
   async getProductByName(name: string) {
     const products = await this.productRepository.find({
-      where: { name: ILike(`%${name}%`) }, // ✅ Kichik-katta harf farq qilmaydi + qisman qidirish
+      where: { name: ILike(`%${name}%`) },
     });
 
-    if (!products.length) throw new NotFoundException(`No products found matching "${name}" ❌`);
+    if (!products.length)
+      throw new NotFoundException(`No products found matching "${name}" ❌`);
 
     return {
       success: true,
@@ -68,13 +69,16 @@ export class ProductsService {
   async updateProduct(
     id: number,
     updateProductDto: UpdateProductDto,
-    file?: Express.Multer.File, // 🔹 Rasm fayli
+    file?: Express.Multer.File,
   ) {
     const product = await this.getProductById(id);
 
-    const imagePath = file ? file.filename : product.data.image; // 🔹 Yangi rasm bo‘lsa, yangilaydi
+    const imagePath = file ? file.filename : product.data.image;
 
-    await this.productRepository.update(id, { ...updateProductDto, image: imagePath });
+    await this.productRepository.update(id, {
+      ...updateProductDto,
+      image: imagePath,
+    });
 
     const updatedProduct = await this.getProductById(id);
     return {

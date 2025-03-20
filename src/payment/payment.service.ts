@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Payment, PaymentStatus } from './entities/payment.entity';
@@ -12,14 +16,18 @@ export class PaymentService {
   ) {}
 
   async createPayment(orderId: number, amount: number) {
-    const order = await this.orderRepository.findOne({ where: { id: orderId } });
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+    });
 
     if (!order) {
       throw new NotFoundException('Order not found');
     }
 
     if (order.status === 'cancelled') {
-      throw new BadRequestException('Cannot create payment for a cancelled order');
+      throw new BadRequestException(
+        'Cannot create payment for a cancelled order',
+      );
     }
 
     const payment = this.paymentRepository.create({
@@ -35,7 +43,10 @@ export class PaymentService {
   }
 
   async getPaymentById(paymentId: number) {
-    const payment = await this.paymentRepository.findOne({ where: { id: paymentId }, relations: ['order'] });
+    const payment = await this.paymentRepository.findOne({
+      where: { id: paymentId },
+      relations: ['order'],
+    });
 
     if (!payment) {
       throw new NotFoundException('Payment not found');
@@ -45,13 +56,22 @@ export class PaymentService {
   }
 
   async getPaymentsByOrderId(orderId: number) {
-    const payments = await this.paymentRepository.find({ where: { orderId }, relations: ['order'] });
+    const payments = await this.paymentRepository.find({
+      where: { orderId },
+      relations: ['order'],
+    });
 
-    return { success: true, message: 'Payments for order retrieved ✅', data: payments };
+    return {
+      success: true,
+      message: 'Payments for order retrieved ✅',
+      data: payments,
+    };
   }
 
   async updatePaymentStatus(paymentId: number, status: PaymentStatus) {
-    const payment = await this.paymentRepository.findOne({ where: { id: paymentId } });
+    const payment = await this.paymentRepository.findOne({
+      where: { id: paymentId },
+    });
 
     if (!payment) {
       throw new NotFoundException('Payment not found');
@@ -64,6 +84,10 @@ export class PaymentService {
     payment.status = status;
     await this.paymentRepository.save(payment);
 
-    return { success: true, message: `Payment status updated to ${status} ✅`, data: payment };
+    return {
+      success: true,
+      message: `Payment status updated to ${status} ✅`,
+      data: payment,
+    };
   }
 }

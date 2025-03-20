@@ -12,12 +12,15 @@ import { CartService } from './cart.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('cart')
-@UseGuards(AuthGuard) // ✅ Auth kerak bo‘ladi
+@UseGuards(AuthGuard)
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post('add')
-  addToCart(@Request() req, @Body() body: { productId: number; quantity: number }) {
+  addToCart(
+    @Request() req,
+    @Body() body: { productId: number; quantity: number },
+  ) {
     return this.cartService.addToCart(req.user, body.productId, body.quantity);
   }
 

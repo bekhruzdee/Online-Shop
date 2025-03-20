@@ -43,11 +43,15 @@ export class UsersService {
     };
   }
 
-  async getAllAdmins(): Promise<{ success: boolean; message: string; data: User[] }> {
+  async getAllAdmins(): Promise<{
+    success: boolean;
+    message: string;
+    data: User[];
+  }> {
     const admins = await this.usersRepository.find({
-      where: { role: 'admin' }, // Faqat adminlarni olish
+      where: { role: 'admin' },
     });
-  
+
     if (!admins.length) {
       return {
         success: false,
@@ -55,7 +59,7 @@ export class UsersService {
         data: [],
       };
     }
-  
+
     return {
       success: true,
       message: 'Admins retrieved successfully✅',

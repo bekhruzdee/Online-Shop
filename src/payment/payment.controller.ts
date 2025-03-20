@@ -22,7 +22,10 @@ export class PaymentController {
   }
 
   @Patch(':id/status')
-  async updatePaymentStatus(@Param('id') id: number, @Body() body: { status: PaymentStatus }) {
+  async updatePaymentStatus(
+    @Param('id') id: number,
+    @Body() body: { status: PaymentStatus },
+  ) {
     return this.paymentService.updatePaymentStatus(id, body.status);
   }
 }

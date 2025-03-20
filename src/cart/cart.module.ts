@@ -9,6 +9,6 @@ import { Product } from 'src/products/entities/product.entity';
   imports: [TypeOrmModule.forFeature([Cart, Product])],
   controllers: [CartController],
   providers: [CartService],
-  exports: [CartService], // 🟢 CartService ni export qildik
+  exports: [CartService],
 })
 export class CartModule {}

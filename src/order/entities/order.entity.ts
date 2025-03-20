@@ -17,20 +17,19 @@ export class Order {
   id: number;
 
   @ManyToOne(() => User, (user) => user.orders)
-  @JoinColumn({ name: 'userId' }) 
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @Column()
-  userId: number; 
+  userId: number;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
   orderItems: OrderItem[];
 
-  @OneToMany(() => Payment, (payment) => payment.order, { cascade: true }) 
+  @OneToMany(() => Payment, (payment) => payment.order, { cascade: true })
   payment: Payment;
-  
 
-  @Column({ default: 'pending' }) 
+  @Column({ default: 'pending' })
   status: string;
 
   @CreateDateColumn()

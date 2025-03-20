@@ -9,14 +9,19 @@ import { Product } from '../products/entities/product.entity';
 export class CartService {
   constructor(
     @InjectRepository(Cart) private readonly cartRepository: Repository<Cart>,
-    @InjectRepository(Product) private readonly productRepository: Repository<Product>,
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
   ) {}
 
   async addToCart(user: User, productId: number, quantity: number) {
-    const product = await this.productRepository.findOne({ where: { id: productId } });
+    const product = await this.productRepository.findOne({
+      where: { id: productId },
+    });
     if (!product) throw new NotFoundException('Product not found ❌');
 
-    let cartItem = await this.cartRepository.findOne({ where: { user, product } });
+    let cartItem = await this.cartRepository.findOne({
+      where: { user, product },
+    });
 
     if (cartItem) {
       cartItem.quantity += quantity;
@@ -25,7 +30,11 @@ export class CartService {
     }
 
     await this.cartRepository.save(cartItem);
-    return { success: true, message: 'Product added to cart ✅', data: cartItem };
+    return {
+      success: true,
+      message: 'Product added to cart ✅',
+      data: cartItem,
+    };
   }
 
   async getCart(user: User) {
@@ -33,7 +42,7 @@ export class CartService {
       where: { user },
       relations: ['product'],
     });
-  
+
     return {
       success: true,
       message: 'Cart retrieved successfully ✅',
@@ -46,10 +55,12 @@ export class CartService {
         cartItems: cart,
       },
     };
-  } 
+  }
 
   async removeFromCart(user: User, cartItemId: number) {
-    const cartItem = await this.cartRepository.findOne({ where: { id: cartItemId, user } });
+    const cartItem = await this.cartRepository.findOne({
+      where: { id: cartItemId, user },
+    });
     if (!cartItem) throw new NotFoundException('Cart item not found ❌');
 
     await this.cartRepository.remove(cartItem);

@@ -20,22 +20,22 @@ export class Payment {
   id: number;
 
   @ManyToOne(() => Order, (order) => order.payment, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'orderId' }) // ✅ `orderId` ustuni qo‘shildi
+  @JoinColumn({ name: 'orderId' })
   order: Order;
 
   @Column()
-  orderId: number; // ✅ Foydali bo‘lishi uchun `orderId` alohida ustun sifatida qo‘shildi
+  orderId: number;
 
   @Column()
   amount: number;
 
   @Column({
     type: 'enum',
-    enum: PaymentStatus, // ✅ `enum` sifatida belgilandi
+    enum: PaymentStatus,
     default: PaymentStatus.PENDING,
   })
   status: PaymentStatus;
 
   @CreateDateColumn()
-  createdAt: Date; // ✅ `@CreateDateColumn()` orqali avtomatik vaqt qo‘shiladi
+  createdAt: Date;
 }

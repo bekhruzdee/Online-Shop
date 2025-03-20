@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Cart } from 'src/cart/entities/cart.entity';
 import { Order } from 'src/order/entities/order.entity';
 import {
@@ -24,7 +23,7 @@ export class User {
   role: string;
   @OneToMany(() => Cart, (cart) => cart.user)
   cart: Cart[];
-  @OneToMany(() => Order, (order) => order.user)  
+  @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

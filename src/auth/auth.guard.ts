@@ -14,31 +14,31 @@ export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-      const request = context.switchToHttp().getRequest<Request>();
-      const authHeader = request.headers.authorization;
+    const request = context.switchToHttp().getRequest<Request>();
+    const authHeader = request.headers.authorization;
 
-      if (!authHeader) {
-          throw new UnauthorizedException('Authorization header is missing');
-      }
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization header is missing');
+    }
 
-      const [type, token] = authHeader.split(' ');
+    const [type, token] = authHeader.split(' ');
 
-      if (type !== 'Bearer' || !token) {
-          throw new UnauthorizedException('Invalid authorization format');
-      }
+    if (type !== 'Bearer' || !token) {
+      throw new UnauthorizedException('Invalid authorization format');
+    }
 
-      try {
-          const payload = await this.jwtService.verify(token, {
-              secret: process.env.JWT_SECRET,
-          });
+    try {
+      const payload = await this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      });
 
-          // ❌ iat va exp'ni olib tashlaymiz
-          const { iat, exp, ...userData } = payload;
-          request['user'] = userData;
-      } catch (error) {
-          throw new UnauthorizedException('Invalid token or token expired');
-      }
+      // ❌ iat va exp'ni olib tashlaymiz
+      const { iat, exp, ...userData } = payload;
+      request['user'] = userData;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token or token expired');
+    }
 
-      return true;
+    return true;
   }
 }
