@@ -14,5 +14,5 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsString()
-  image?: string; // ✅ Rasm maydoni
+  image?: string;
 }

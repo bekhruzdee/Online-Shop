@@ -57,11 +57,10 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload, { expiresIn: '1d' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    // Cookie ni yaratish va javobga qo'shish
     res.cookie('refresh_token', refreshToken, {
-      httpOnly: true, // Xavfsizlik uchun
-      secure: process.env.NODE_ENV === 'production', // HTTPS da ishlashini ta'minlash
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 kun
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     const { password, ...userData } = user;

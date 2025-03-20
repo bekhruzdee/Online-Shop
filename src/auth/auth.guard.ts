@@ -32,7 +32,6 @@ export class AuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET,
       });
 
-      // ❌ iat va exp'ni olib tashlaymiz
       const { iat, exp, ...userData } = payload;
       request['user'] = userData;
     } catch (error) {
