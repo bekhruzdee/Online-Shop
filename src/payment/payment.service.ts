@@ -27,7 +27,7 @@ export class PaymentService {
     });
 
     if (!order) {
-      throw new NotFoundException('Order not found');
+      throw new NotFoundException('Order not found❌');
     }
 
     if (order.status === 'cancelled') {
@@ -54,7 +54,7 @@ export class PaymentService {
     });
 
     if (!payment) {
-      throw new NotFoundException('Payment not found');
+      throw new NotFoundException('Payment not found❌');
     }
 
     return { success: true, message: 'Payment retrieved ✅', data: payment };
@@ -80,7 +80,7 @@ export class PaymentService {
     });
 
     if (!payment) {
-      throw new NotFoundException('Payment not found');
+      throw new NotFoundException('Payment not found❌');
     }
 
     if (![PaymentStatus.SUCCESSFUL, PaymentStatus.FAILED].includes(status)) {

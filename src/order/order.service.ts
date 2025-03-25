@@ -97,7 +97,7 @@ export class OrderService {
     });
 
     if (!order) {
-      throw new NotFoundException('Order not found');
+      throw new NotFoundException('Order not found❌');
     }
 
     if (order.user.id !== user.id && user.role !== 'admin') {

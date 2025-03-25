@@ -55,7 +55,7 @@ export class UsersService {
     if (!admins.length) {
       return {
         success: false,
-        message: 'No admins found',
+        message: 'No admins found❌',
         data: [],
       };
     }
@@ -106,7 +106,7 @@ export class UsersService {
     if (!existingUser) {
       return {
         success: false,
-        message: 'User not found',
+        message: 'User not found❌',
       };
     }
 
